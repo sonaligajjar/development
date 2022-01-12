@@ -22,7 +22,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     public Student saveStudent(StudentReq studentReq) {
         Student student = new Student();
-        if(!CommonUtils.isObjectNullOrEmpty(studentReq.getId()) && studentReq.getId() != 0){
+        if(!CommonUtils.isObjectNullOrEmpty(studentReq.getId()) && studentReq.getId() > 0){
             student = registrationRepo.getOne(studentReq.getId());
         }
         BeanUtils.copyProperties(studentReq,student);
