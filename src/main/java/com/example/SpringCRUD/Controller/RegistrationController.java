@@ -46,7 +46,7 @@ public class RegistrationController {
 
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new CommonResponse("There is an error to save get data", HttpStatus.OK.value()), HttpStatus.OK);
+                    new CommonResponse("There is an error to save get data", HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
     }
