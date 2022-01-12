@@ -22,20 +22,15 @@ public class RegistrationController {
     @Autowired
     RegistrationService registrationService;
 
-    @Autowired
-    RegistrationRepo registrationRepo;
-
-
     @PostMapping(value =  "/save")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CommonResponse> save(@RequestBody StudentReq student) throws Exception {
         if (!CommonUtils.isObjectNullOrEmpty(student)) {
-            Student std = registrationService.saveStudent(student);
             return new ResponseEntity<>(
-                    new CommonResponse("Save data successfully", std,HttpStatus.OK.value()), HttpStatus.OK);
+                    new CommonResponse("Save data successfully", registrationService.saveStudent(student),HttpStatus.OK.value()), HttpStatus.OK);
         }
         return new ResponseEntity<>(
-                new CommonResponse("There is an error to save data.Please try again", HttpStatus.OK.value()), HttpStatus.OK);
+                new CommonResponse("There is an error to save data.Please try again", HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
@@ -49,7 +44,7 @@ public class RegistrationController {
                         new CommonResponse("Get data successfully", student,HttpStatus.OK.value()), HttpStatus.OK);
             }
             return new ResponseEntity<CommonResponse>(
-                    new CommonResponse("There is an error to get data", HttpStatus.OK.value()), HttpStatus.OK);
+                    new CommonResponse("There is an error to get data", HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
 
         } catch (Exception e) {
             return new ResponseEntity<>(
@@ -66,14 +61,14 @@ public class RegistrationController {
             List<Student> studentList = registrationService.getStudentList();
             if (!CommonUtils.isListNullOrEmpty(studentList)) {
                 return new ResponseEntity<CommonResponse>(
-                        new CommonResponse("Get data successfully", studentList, HttpStatus.OK.value()), HttpStatus.OK);
+                        new CommonResponse("Get data successfully", registrationService.getStudentList(), HttpStatus.OK.value()), HttpStatus.OK);
             }
             return new ResponseEntity<CommonResponse>(
-                    new CommonResponse("There is an error to get data", HttpStatus.OK.value()), HttpStatus.OK);
+                    new CommonResponse("There is an error to get data", HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
 
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new CommonResponse("There is an error to get data", HttpStatus.OK.value()), HttpStatus.OK);
+                    new CommonResponse("There is an error to get data", HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
     }
@@ -85,14 +80,14 @@ public class RegistrationController {
             Boolean isDeleted = registrationService.deleteStudent(id);
             if (isDeleted) {
                 return new ResponseEntity<CommonResponse>(
-                        new CommonResponse("Delete record successfully", true, HttpStatus.OK.value()), HttpStatus.OK);
+                        new CommonResponse("Delete record successfully", registrationService.deleteStudent(id), HttpStatus.OK.value()), HttpStatus.OK);
             }
             return new ResponseEntity<CommonResponse>(
-                    new CommonResponse("There is an error to Delete record", HttpStatus.OK.value()), HttpStatus.OK);
+                    new CommonResponse("There is an error to Delete record", HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
 
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new CommonResponse("There is an error to Delete record", HttpStatus.OK.value()), HttpStatus.OK);
+                    new CommonResponse("There is an error to Delete record", HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
     }
